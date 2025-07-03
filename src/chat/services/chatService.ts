@@ -90,6 +90,35 @@ class ChatService {
       return false;
     }
   }
+
+  /**
+   * Sube un archivo PDF o Word para que el bot lo lea y responda
+   */
+  async uploadFile(file: File, userId: string = "test_user"): Promise<ChatResponse> {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("user_id", userId);
+      const response = await this.api.post("/upload-pdf", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (response.data && response.data.extracted_text) {
+        const pregunta = "Resume el siguiente texto:\n" + response.data.extracted_text;
+        const chatResponse = await this.api.post("/chat", {
+          user_id: userId,
+          message: pregunta
+        });
+        return chatResponse.data;
+      } else {
+        return response.data;
+      }
+    } catch (error) {
+      console.error("Error subiendo archivo al chatbot:", error);
+      throw new Error("No se pudo subir el archivo. Intenta de nuevo.");
+    }
+  }
 }
 
 export const chatService = new ChatService();

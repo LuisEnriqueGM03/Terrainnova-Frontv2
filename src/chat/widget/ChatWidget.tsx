@@ -19,7 +19,7 @@ const ChatWidget: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isServiceAvailable, setIsServiceAvailable] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   // Verificar disponibilidad del servicio al cargar
   useEffect(() => {
@@ -133,6 +133,54 @@ const ChatWidget: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    // Solo permitir PDF y Word
+    const allowedTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ];
+    if (!allowedTypes.includes(file.type)) {
+      alert('Solo se permiten archivos PDF o Word (.pdf, .doc, .docx)');
+      return;
+    }
+    setIsLoading(true);
+    // Mensaje temporal de usuario
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      content: `Archivo enviado: ${file.name}`,
+      isUser: true,
+      timestamp: new Date(),
+    };
+    setMessages((prev: Message[]) => [...prev, userMessage]);
+    try {
+      // Llama al servicio para subir el archivo
+      const response = await chatService.uploadFile(file);
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: response.reply,
+        isUser: false,
+        timestamp: new Date(),
+        imagenUrl: response.imagenUrl,
+      };
+      setMessages((prev: Message[]) => [...prev, assistantMessage]);
+    } catch (error) {
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: 'Error al procesar el archivo. Intenta de nuevo.',
+        isUser: false,
+        timestamp: new Date(),
+      };
+      setMessages((prev: Message[]) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+      // Limpia el input file
+      e.target.value = '';
+    }
+  };
+
   return (
     <>
       {/* Botón flotante */}
@@ -237,15 +285,21 @@ const ChatWidget: React.FC = () => {
           {/* Input y botón de envío */}
           <div className="chat-widget-input-wrapper">
             <div className="chat-widget-input-group">
-              <input
-                ref={inputRef}
-                type="text"
+              <textarea
+                ref={inputRef as React.RefObject<HTMLTextAreaElement>}
                 className="chat-widget-input"
                 placeholder="Escribe tu mensaje..."
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 disabled={isLoading || !isServiceAvailable}
+                rows={1}
+                style={{ resize: 'none', minHeight: '36px', maxHeight: '120px', overflowY: 'auto' }}
+                onInput={e => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '36px';
+                  target.style.height = Math.min(target.scrollHeight, 120) + 'px';
+                }}
               />
               <button
                 className="chat-widget-send-btn"
@@ -254,6 +308,18 @@ const ChatWidget: React.FC = () => {
               >
                 <BsSend />
               </button>
+              {/* Input para subir archivos PDF y Word */}
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                style={{ display: 'none' }}
+                id="chat-file-upload"
+                onChange={handleFileChange}
+                disabled={isLoading || !isServiceAvailable}
+              />
+              <label htmlFor="chat-file-upload" className="chat-widget-file-btn" title="Adjuntar archivo PDF o Word" style={{ marginLeft: 8, cursor: isLoading || !isServiceAvailable ? 'not-allowed' : 'pointer' }}>
+                📎
+              </label>
             </div>
           </div>
         </div>
