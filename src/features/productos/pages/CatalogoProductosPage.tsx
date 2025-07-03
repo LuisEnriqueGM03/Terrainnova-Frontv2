@@ -12,8 +12,6 @@ import ToastifyLoginRequired from '../../../shared/components/ToastifyLoginRequi
 import Footer from '../../../shared/components/Footer';
 import { useSearch } from '../../../shared/context/SearchContext';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-
 const CatalogoProductosPage: React.FC = () => {
   const { data: productos, isLoading, error } = useProductos();
   const [openId, setOpenId] = useState<number | null>(null);
@@ -155,7 +153,6 @@ const CatalogoProductosPage: React.FC = () => {
           >
             <CatalogoSidebar
               onFiltrar={handleFiltrar}
-              cantidadFiltrados={cantidadMostrar}
               onLimpiar={handleLimpiar}
             />
           </div>

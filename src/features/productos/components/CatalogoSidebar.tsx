@@ -5,7 +5,6 @@ import type { Categoria } from "../../categorias/types/types";
 interface CatalogoSidebarProps {
   onFiltrar: (filtros: { categoriaId?: number, nombre?: string, precioMin?: number, precioMax?: number }) => void;
   onLimpiar: () => void;
-  cantidadFiltrados?: number;
 }
 
 const CatalogoSidebar: React.FC<CatalogoSidebarProps> = ({ onFiltrar, onLimpiar }) => {
