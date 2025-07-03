@@ -17,7 +17,7 @@ interface JwtPayload {
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { mutate, status, error, data } = useLoginMutation();
+  const { mutate, status, error } = useLoginMutation();
   const { setAuth } = useAuth();
   const [loginError, setLoginError] = useState<string | null>(null);
   const navigate = useNavigate();

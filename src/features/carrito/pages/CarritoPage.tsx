@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useCarritoContext, useCarritoCantidad, useCarritoStats } from "../hooks/hooks";
 import { useAuth } from "../../auth/context";
 import { Link, useNavigate } from "react-router-dom";
-import { checkoutCarrito, checkoutStripe } from "../services/services";
+import { checkoutStripe } from "../services/services";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -15,13 +15,12 @@ import ToastifyLoginRequired from '../../../shared/components/ToastifyLoginRequi
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const CarritoPage: React.FC = () => {
-  const { items, removeItem, clear, loading: carritoLoading, carritoId } = useCarritoContext();
+  const { items, removeItem, loading: carritoLoading, carritoId } = useCarritoContext();
   const { incrementarCantidad, decrementarCantidad } = useCarritoCantidad();
   const { total, isEmpty } = useCarritoStats();
   const { usuario } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [showStripe, setShowStripe] = useState(false);
   const { clientSecret, loading: stripeLoading, error: stripeError, createPayment } = useStripePayment();
 
@@ -50,20 +49,6 @@ const CarritoPage: React.FC = () => {
       precio: item.precio
     })));
   }, [items]);
-
-  const handleCheckout = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      if (!carritoId) throw new Error('No se encontró el carrito.');
-      const { url } = await checkoutStripe(carritoId);
-      window.location.href = url;
-    } catch (err: any) {
-      setError(err.message || 'Error al iniciar checkout');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleShowStripe = async () => {
     if (!carritoId) return;

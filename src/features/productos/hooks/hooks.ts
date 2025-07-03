@@ -7,7 +7,7 @@ import {
   eliminarProducto,
   subirImagenProducto 
 } from '../services/services';
-import type { CreateProductoData, UpdateProductoData } from '../types/types';
+import type { UpdateProductoData } from '../types/types';
 
 export function useProductos() {
   return useQuery({ queryKey: ['productos'], queryFn: fetchProductos });

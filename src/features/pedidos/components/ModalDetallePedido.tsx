@@ -71,7 +71,6 @@ const ModalDetallePedido: React.FC<ModalDetallePedidoProps> = ({ open, pedido, o
 
   const theme = getEstadoTheme(pedidoActual.estado);
 
-  const getEstadoColor = (estado: string) => getEstadoTheme(estado).color;
   const getEstadoIcon = (estado: string) => getEstadoTheme(estado).icon;
 
   const handleActualizarEstado = async (nuevoEstado: string) => {

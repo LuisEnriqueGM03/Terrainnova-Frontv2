@@ -4,11 +4,11 @@ import type { Categoria } from "../../categorias/types/types";
 
 interface CatalogoSidebarProps {
   onFiltrar: (filtros: { categoriaId?: number, nombre?: string, precioMin?: number, precioMax?: number }) => void;
-  cantidadFiltrados?: number;
   onLimpiar: () => void;
+  cantidadFiltrados?: number;
 }
 
-const CatalogoSidebar: React.FC<CatalogoSidebarProps> = ({ onFiltrar, cantidadFiltrados, onLimpiar }) => {
+const CatalogoSidebar: React.FC<CatalogoSidebarProps> = ({ onFiltrar, onLimpiar }) => {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
   const [seleccionada, setSeleccionada] = useState<number | undefined>(undefined);

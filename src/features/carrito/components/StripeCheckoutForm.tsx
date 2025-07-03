@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import type { StripeError } from '@stripe/stripe-js';
 import { useAuth } from '../../auth/context';
 import { updatePerfilUsuario } from '../../usuarios/services/services';
 

@@ -148,7 +148,7 @@ const ModalAgregarProducto: React.FC<ModalAgregarProductoProps> = ({ open, categ
                 <CKEditor
                   editor={ClassicEditor}
                   data={descripcion}
-                  onChange={(event, editor) => {
+                  onChange={(editor) => {
                     setDescripcion(editor.getData());
                   }}
                   disabled={crearStatus === "pending"}

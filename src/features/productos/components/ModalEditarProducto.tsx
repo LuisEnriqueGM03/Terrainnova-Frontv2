@@ -143,7 +143,7 @@ const ModalEditarProducto: React.FC<ModalEditarProductoProps> = ({ open, product
                 <CKEditor
                   editor={ClassicEditor}
                   data={descripcion}
-                  onChange={(event, editor) => {
+                  onChange={(editor) => {
                     setDescripcion(editor.getData());
                   }}
                   disabled={editarStatus === "pending"}
