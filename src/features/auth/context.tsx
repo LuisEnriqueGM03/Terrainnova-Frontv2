@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type { Usuario } from '../usuarios/types/types';
 import { jwtDecode } from 'jwt-decode';
 import { refreshTokenService } from './services/services';
