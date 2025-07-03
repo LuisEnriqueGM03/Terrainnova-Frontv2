@@ -1,69 +1,96 @@
-# React + TypeScript + Vite
+# Terrainnova Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto de e-commerce sostenible: Terrainnova
 
-Currently, two official plugins are available:
+## Descripción
+Frontend moderno para la plataforma Terrainnova, construido con React, Vite y TypeScript. Incluye catálogo de productos, carrito, autenticación, panel de administración, chat inteligente y más. Optimizado para SEO, accesibilidad y rendimiento.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Requisitos previos
+- Node.js >= 16.x
+- npm >= 8.x (o yarn)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Instalación
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+1. **Clona el repositorio:**
+   ```bash
+   git clone <URL-del-repo>
+   cd terrainnova-front
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. **Instala las dependencias:**
+   ```bash
+   npm install
+   # o
+   yarn install
+   ```
+
+---
+
+## Variables de entorno
+
+Crea un archivo `.env` en la raíz con al menos la siguiente variable:
+
+```
+VITE_API_URL=http://localhost:3000
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Ajusta la URL según tu backend.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Scripts principales
+
+- **Desarrollo:**
+  ```bash
+  npm run dev
+  # o
+  yarn dev
+  ```
+  Accede a [http://localhost:5173](http://localhost:5173)
+
+- **Build producción:**
+  ```bash
+  npm run build
+  # o
+  yarn build
+  ```
+
+- **Vista previa del build:**
+  ```bash
+  npm run preview
+  # o
+  yarn preview
+  ```
+
+---
+
+## Estructura principal
+
+- `src/` Código fuente principal
+- `public/` Archivos estáticos (favicon, robots.txt, sitemap.xml)
+- `src/features/` Módulos por dominio (productos, carrito, admin, etc.)
+- `src/shared/` Componentes y utilidades reutilizables
+
+---
+
+## Notas importantes
+- Las imágenes están optimizadas en formato `.webp`.
+- El chat soporta Markdown y muestra imágenes de productos.
+- El panel de administración y rutas protegidas requieren autenticación.
+- Para el correcto funcionamiento, asegúrate de tener el backend corriendo y sirviendo imágenes estáticas.
+
+---
+
+## Accesibilidad y SEO
+- Headings jerárquicos y `alt` descriptivos en imágenes.
+- `robots.txt` y `sitemap.xml` configurados para buscadores.
+- Datos estructurados JSON-LD incluidos.
+
+---
+
+## Contacto
+¿Dudas o sugerencias? Escribe a [tu-email@ejemplo.com]

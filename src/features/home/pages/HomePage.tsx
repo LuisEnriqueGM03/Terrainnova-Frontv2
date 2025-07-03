@@ -6,6 +6,7 @@ import ComoFuncionamos from '../components/ComoFuncionamos';
 import FAQs from '../components/FAQs';
 import Contactanos from '../components/Contactanos';
 import Footer from '../../../shared/components/Footer';
+import ChatWidget from '../../../chat/widget/ChatWidget';
 
 const HomePage: React.FC = () => (
   <>
@@ -15,6 +16,7 @@ const HomePage: React.FC = () => (
     <ComoFuncionamos />
     <FAQs />
     <Contactanos />
+    <ChatWidget />
     <Footer />
   </>
 );
