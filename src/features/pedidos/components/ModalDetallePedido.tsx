@@ -92,10 +92,10 @@ const ModalDetallePedido: React.FC<ModalDetallePedidoProps> = ({ open, pedido, o
       <div className="modal-pedido-dialog">
         <div className="modal-pedido-content">
           <div className="modal-pedido-header" style={{ background: `linear-gradient(135deg, ${theme.color} 0%, ${theme.color} 100%)` }}>
-            <div className="modal-pedido-title" style={{ color: '#fff' }}>
+            <h2 className="modal-pedido-title" style={{ color: '#fff', margin: 0, fontSize: '1.3rem' }}>
               <i className={`bi bi-receipt me-2`} style={{ color: '#fff' }}></i>
-              <span style={{ color: '#fff' }}>Pedido #{pedidoActual.id}</span>
-            </div>
+              Pedido #{pedidoActual.id}
+            </h2>
             <button 
               type="button" 
               className="modal-pedido-close" 
@@ -176,12 +176,11 @@ const ModalDetallePedido: React.FC<ModalDetallePedidoProps> = ({ open, pedido, o
             </div>
 
             {/* Productos del pedido */}
-            <div className="pedido-productos-section">
-              <h5 className="pedido-productos-title" style={{ color: theme.color, borderBottom: `3px solid ${theme.color}` }}>
+            <section className="pedido-productos-section">
+              <h3 className="pedido-productos-title" style={{ color: theme.color, borderBottom: `3px solid ${theme.color}`, fontSize: '1.1rem' }}>
                 <i className="bi bi-box-seam me-2" style={{ color: theme.color }}></i>
                 Productos del Pedido
-              </h5>
-              
+              </h3>
               <div className="pedido-productos-grid">
                 {pedidoActual.items.map((item, index) => (
                   <div key={index} className="pedido-producto-card">
@@ -198,7 +197,6 @@ const ModalDetallePedido: React.FC<ModalDetallePedidoProps> = ({ open, pedido, o
                         </div>
                       )}
                     </div>
-                    
                     <div className="pedido-producto-info">
                       <h6 className="pedido-producto-name">{item.producto.nombre}</h6>
                       <div className="pedido-producto-details">
@@ -216,7 +214,7 @@ const ModalDetallePedido: React.FC<ModalDetallePedidoProps> = ({ open, pedido, o
                   </div>
                 ))}
               </div>
-            </div>
+            </section>
             {error && <div className="text-danger mt-3">{error}</div>}
           </div>
 

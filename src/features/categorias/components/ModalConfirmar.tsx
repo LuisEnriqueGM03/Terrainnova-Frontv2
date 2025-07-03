@@ -18,11 +18,11 @@ const ModalConfirmar: React.FC<ModalConfirmarProps> = ({ open, onClose, onConfir
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">{titulo}</h5>
+            <h2 className="modal-title" style={{ fontSize: '1.3rem', margin: 0 }}>{titulo}</h2>
             <button type="button" className="btn-close" onClick={onClose} disabled={loading}></button>
           </div>
           <div className="modal-body">
-            {mensaje}
+            <p>{mensaje}</p>
           </div>
           <div className="modal-footer">
             <button className="btn btn-secondary" onClick={onClose} disabled={loading}>{cancelText}</button>

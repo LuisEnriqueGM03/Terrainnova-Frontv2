@@ -43,7 +43,6 @@ const Navbar: React.FC = () => {
     navigate('/carrito');
   };
 
-  // Cerrar overlay al hacer clic fuera
   React.useEffect(() => {
     if (!showSearch) return;
     function handleClick(e: MouseEvent) {
@@ -115,7 +114,7 @@ const Navbar: React.FC = () => {
           <ul className="navbar-nav ms-auto d-flex align-items-center gap-3" style={{ marginRight: 0 }}>
             <li className="nav-item">
               <div className="nav-link search-container d-none d-lg-block position-relative p-0">
-                <div className="d-flex align-items-center" style={{ minWidth: 32 }}>
+                <form role="search" className="d-flex align-items-center" style={{ minWidth: 32 }} onSubmit={e => e.preventDefault()}>
                   <button
                     className="btn btn-link p-0 border-0"
                     onClick={() => {
@@ -125,11 +124,12 @@ const Navbar: React.FC = () => {
                     title={showSearch ? "Cerrar" : "Buscar"}
                     tabIndex={0}
                     style={{ zIndex: 2 }}
+                    type="button"
                   >
                     <i className={`bi ${showSearch ? 'bi-x-lg' : 'bi-search'}`}></i>
                   </button>
                   <input
-                    type="text"
+                    type="search"
                     className={`form-control search-expand ms-2 ${showSearch ? 'expanded' : ''}`}
                     placeholder="Buscar productos..."
                     style={{
@@ -154,11 +154,11 @@ const Navbar: React.FC = () => {
                     }}
                   />
                   {showSearch && (
-                    <button className="btn btn-principal btn-sm ms-2 position-absolute end-0 top-50 translate-middle-y" style={{ zIndex: 3 }} tabIndex={0}>
+                    <button className="btn btn-principal btn-sm ms-2 position-absolute end-0 top-50 translate-middle-y" style={{ zIndex: 3 }} tabIndex={0} type="submit">
                       <i className="bi bi-search"></i>
                     </button>
                   )}
-                </div>
+                </form>
               </div>
             </li>
             <li className="nav-item">
@@ -255,24 +255,27 @@ const Navbar: React.FC = () => {
       {showSearch && (
         <div className="search-overlay d-lg-none">
           <div className="search-float-box" ref={searchContainerRef}>
-            <button
-              className="btn btn-link p-0 border-0"
-              onClick={() => setShowSearch(false)}
-              title="Cerrar"
-              tabIndex={0}
-              style={{ zIndex: 2 }}
-            >
-              <i className="bi bi-x-lg"></i>
-            </button>
-            <input
-              type="text"
-              className="form-control search-expand expanded mx-2"
-              placeholder="Buscar productos..."
-              autoFocus
-            />
-            <button className="btn btn-principal btn-sm" tabIndex={0}>
-              <i className="bi bi-search"></i>
-            </button>
+            <form role="search" className="d-flex align-items-center w-100" onSubmit={e => e.preventDefault()}>
+              <button
+                className="btn btn-link p-0 border-0"
+                onClick={() => setShowSearch(false)}
+                title="Cerrar"
+                tabIndex={0}
+                style={{ zIndex: 2 }}
+                type="button"
+              >
+                <i className="bi bi-x-lg"></i>
+              </button>
+              <input
+                type="search"
+                className="form-control search-expand expanded mx-2"
+                placeholder="Buscar productos..."
+                autoFocus
+              />
+              <button className="btn btn-principal btn-sm" tabIndex={0} type="submit">
+                <i className="bi bi-search"></i>
+              </button>
+            </form>
           </div>
         </div>
       )}

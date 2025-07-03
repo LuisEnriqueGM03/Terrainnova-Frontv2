@@ -6,7 +6,7 @@ import RegisterPage from "../features/auth/pages/RegisterPage";
 import AdminDashboardPage from "../features/admin/pages/AdminPage";
 import AdminInicioPage from "../features/admin/pages/AdminInicioPage";
 import AdminCategoriasPage from "../features/admin/pages/AdminCategoriasPage";
-import AdminProductosPage from "../features/productos/pages/AdminProductosPage";
+import AdminProductosPage from "../features/admin/pages/AdminProductosPage";
 import AdminUsuariosPage from "../features/admin/pages/AdminUsuariosPage";
 import CatalogoProductosPage from "../features/productos/pages/CatalogoProductosPage";
 import ProductoDetailPage from "../features/productos/pages/ProductoDetailPage";
@@ -17,7 +17,7 @@ import { useAuth } from '../features/auth/context';
 import PedidosUsuarioPage from '../features/pedidos/pages/PedidosUsuarioPage';
 import AdminPedidosPage from '../features/admin/pages/AdminPedidosPage';
 import AdminDashboardPanelPage from '../features/admin/pages/AdminDashboardPanelPage';
-import PedidoUsuarioAdminPage from '../features/pedidos/pages/PedidoUsuarioAdminPage';
+import PedidoUsuarioAdminPage from '../features/admin/pages/PedidoUsuarioAdminPage';
 import NosotrosPage from "../features/nosotros/pages/NosotrosPage";
 
 function AdminRoute({ children }: { children: React.ReactNode }) {

@@ -5333,3 +5333,20 @@ body {
   background: #219150;
   color: #fff !important;
 }
+
+/* Admin layout styles */
+.admin-layout {
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+.admin-main {
+  min-height: 100vh;
+  background: #fff;
+  box-shadow: none;
+  padding: 0;
+  transition: margin-left 0.3s ease, background 0.3s;
+}
+.admin-content {
+  flex-grow: 1;
+  padding: 1.5rem;
+}

@@ -80,102 +80,110 @@ const ModalAgregarProducto: React.FC<ModalAgregarProductoProps> = ({ open, categ
       <div className="modal-dialog modal-lg modal-dialog-centered">
         <div className="modal-content">
           <form onSubmit={handleGuardar}>
-            <div className="modal-header">
-              <h5 className="modal-title">Agregar producto</h5>
-              <button type="button" className="btn-close" onClick={onClose} disabled={crearStatus === "pending" || subirImagenStatus === "pending"}></button>
-            </div>
-            <div className="modal-body">
-              {mensaje && <div className="alert alert-info">{mensaje}</div>}
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Nombre</label>
-                  <input
-                    className="form-control"
-                    name="nombre"
-                    value={formData.nombre}
-                    onChange={handleInputChange}
-                    required
-                    disabled={crearStatus === "pending"}
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Categoría</label>
-                  <select
-                    className="form-select"
-                    name="categoriaId"
-                    value={formData.categoriaId || ''}
-                    onChange={handleInputChange}
-                    disabled={crearStatus === "pending"}
-                  >
-                    <option value="">Seleccionar categoría</option>
-                    {categorias.map(cat => (
-                      <option key={cat.id} value={cat.id}>{cat.nombre}</option>
-                    ))}
-                  </select>
-                </div>
+            <section aria-labelledby="modal-agregar-producto-title">
+              <div className="modal-header">
+                <h2 className="modal-title" id="modal-agregar-producto-title">Agregar producto</h2>
+                <button type="button" className="btn-close" onClick={onClose} disabled={crearStatus === "pending" || subirImagenStatus === "pending"}></button>
               </div>
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Precio</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="precio"
-                    value={formData.precio}
-                    onChange={handleInputChange}
-                    min="0"
-                    step="0.01"
-                    required
-                    disabled={crearStatus === "pending"}
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Stock</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="stock"
-                    value={formData.stock}
-                    onChange={handleInputChange}
-                    min="0"
-                    required
-                    disabled={crearStatus === "pending"}
-                  />
-                </div>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Descripción</label>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={descripcion}
-                  onChange={(editor) => {
-                    setDescripcion(editor.getData());
-                  }}
-                  disabled={crearStatus === "pending"}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Imagen del producto</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  disabled={crearStatus === "pending" || subirImagenStatus === "pending"}
-                />
-                <small className="form-text text-muted">
-                  Formatos permitidos: JPG, PNG. Máximo 2MB.
-                </small>
-                {selectedFile && (
-                  <div className="file-indicator">
-                    <small className="text-success">
-                      <i className="bi bi-check-circle me-1"></i>
-                      Archivo seleccionado: {selectedFile.name}
-                    </small>
+              <div className="modal-body">
+                {mensaje && <div className="alert alert-info">{mensaje}</div>}
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label" htmlFor="modal-nombre">Nombre</label>
+                    <input
+                      id="modal-nombre"
+                      className="form-control"
+                      name="nombre"
+                      value={formData.nombre}
+                      onChange={handleInputChange}
+                      required
+                      disabled={crearStatus === "pending"}
+                    />
                   </div>
-                )}
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label" htmlFor="modal-categoria">Categoría</label>
+                    <select
+                      id="modal-categoria"
+                      className="form-select"
+                      name="categoriaId"
+                      value={formData.categoriaId || ''}
+                      onChange={handleInputChange}
+                      disabled={crearStatus === "pending"}
+                    >
+                      <option value="">Seleccionar categoría</option>
+                      {categorias.map(cat => (
+                        <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label" htmlFor="modal-precio">Precio</label>
+                    <input
+                      id="modal-precio"
+                      type="number"
+                      className="form-control"
+                      name="precio"
+                      value={formData.precio}
+                      onChange={handleInputChange}
+                      min="0"
+                      step="0.01"
+                      required
+                      disabled={crearStatus === "pending"}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label" htmlFor="modal-stock">Stock</label>
+                    <input
+                      id="modal-stock"
+                      type="number"
+                      className="form-control"
+                      name="stock"
+                      value={formData.stock}
+                      onChange={handleInputChange}
+                      min="0"
+                      required
+                      disabled={crearStatus === "pending"}
+                    />
+                  </div>
+                </div>
+                <div className="mb-3">
+                  <label className="form-label" htmlFor="modal-descripcion">Descripción</label>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={descripcion}
+                    onChange={(editor) => {
+                      setDescripcion(editor.getData());
+                    }}
+                    disabled={crearStatus === "pending"}
+                    id="modal-descripcion"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label" htmlFor="modal-imagen">Imagen del producto</label>
+                  <input
+                    id="modal-imagen"
+                    type="file"
+                    className="form-control"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    disabled={crearStatus === "pending" || subirImagenStatus === "pending"}
+                  />
+                  <small className="form-text text-muted">
+                    Formatos permitidos: JPG, PNG. Máximo 2MB.
+                  </small>
+                  {selectedFile && (
+                    <div className="file-indicator">
+                      <small className="text-success">
+                        <i className="bi bi-check-circle me-1"></i>
+                        Archivo seleccionado: {selectedFile.name}
+                      </small>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            </section>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={onClose} disabled={crearStatus === "pending" || subirImagenStatus === "pending"}>Cancelar</button>
               <button type="submit" className="btn btn-principal" disabled={crearStatus === "pending" || subirImagenStatus === "pending"}>

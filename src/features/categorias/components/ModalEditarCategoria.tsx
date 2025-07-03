@@ -23,11 +23,13 @@ const ModalEditarCategoria: React.FC<ModalEditarCategoriaProps> = ({
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Editar categoría</h5>
+            <h2 className="modal-title" style={{ fontSize: '1.3rem', margin: 0 }}>Editar categoría</h2>
             <button type="button" className="btn-close" onClick={onClose} disabled={loading}></button>
           </div>
           <div className="modal-body">
+            <label htmlFor="editar-categoria-nombre" className="form-label">Nombre de la categoría</label>
             <input
+              id="editar-categoria-nombre"
               className="form-control"
               type="text"
               value={nombre}

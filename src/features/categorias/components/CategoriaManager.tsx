@@ -66,7 +66,7 @@ const CategoriaManager: React.FC = () => {
   };
 
   return (
-    <div>
+    <section>
       <h1 className="mb-4">Categorías</h1>
       <form className="categorias-header-form mb-4" onSubmit={handleAgregar} autoComplete="off">
         <input
@@ -136,7 +136,7 @@ const CategoriaManager: React.FC = () => {
         onConfirm={handleConfirmEditar}
         loading={editarStatus === "pending"}
       />
-    </div>
+    </section>
   );
 };
 

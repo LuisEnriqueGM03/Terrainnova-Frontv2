@@ -7,19 +7,22 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import './index.css'
 import App from './App.tsx'
 import { SearchProvider } from './shared/context/SearchContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <CarritoProvider>
-          <SearchProvider>
-            <App />
-          </SearchProvider>
-        </CarritoProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <CarritoProvider>
+            <SearchProvider>
+              <App />
+            </SearchProvider>
+          </CarritoProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   </StrictMode>,
 )

@@ -57,12 +57,12 @@ const AdminPedidosList: React.FC<AdminPedidosListProps> = ({ pedidos, onRefresh 
   };
 
   return (
-    <div>
+    <section>
       <div className="d-flex flex-column gap-4">
         {pedidos.map(pedido => {
           const estado = getEstadoConfig(pedido.estado);
           return (
-            <div 
+            <article 
               key={pedido.id} 
               className="pedido-admin-card"
               style={{ borderColor: estado.color }}
@@ -100,7 +100,7 @@ const AdminPedidosList: React.FC<AdminPedidosListProps> = ({ pedidos, onRefresh 
                   </button>
                 </div>
               </div>
-            </div>
+            </article>
           );
         })}
       </div>
@@ -109,7 +109,7 @@ const AdminPedidosList: React.FC<AdminPedidosListProps> = ({ pedidos, onRefresh 
         pedido={modalPedido.pedido}
         onClose={handleCloseModal}
       />
-    </div>
+    </section>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from 'react-helmet-async';
 import logo from "../../../assets/logo.webp";
 import { Link, useNavigate } from "react-router-dom";
 import "../../../shared/style/style.css";
@@ -48,60 +49,77 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="login-bg">
-      <div className="login-container">
-        {/* Izquierda: Formulario */}
-        <div className="login-form-side">
-          <div className="mb-4 text-center">
-            <img src={logo} alt="Logo de Terrainnova" className="login-logo" loading="lazy" />
-          </div>
-          <h1 className="login-title">
-            ¡Bienvenido de nuevo!
-          </h1>
-          <p className="login-desc">Por favor ingresa tus datos para continuar.</p>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <input
-                type="email"
-                className="form-control form-control-lg"
-                placeholder="Correo electrónico"
-                required
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <input
-                type="password"
-                className="form-control form-control-lg"
-                placeholder="Contraseña"
-                required
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
-            </div>
-            {(loginError || status === "error") && (
-              <div className="login-error">{loginError || (error as Error)?.message}</div>
-            )}
-            <button
-              type="submit"
-              className="btn btn-principal w-100 mb-3"
-              style={{ borderRadius: 24, fontSize: 18, fontWeight: 600, padding: "12px 0" }}
-              disabled={status === "pending"}
-            >
-              {status === "pending" ? 'Ingresando...' : 'Ingresar'}
-            </button>
-          </form>
-          <div className="login-register-link">
-            ¿No tienes cuenta? <Link to="/registro" className="text-principal">Regístrate</Link>
+    <>
+      <Helmet>
+        <title>Iniciar sesión | Terrainnova</title>
+        <meta name="description" content="Accede a tu cuenta de Terrainnova para comprar productos ecológicos y sostenibles. ¡Únete a nuestra comunidad!" />
+        <meta property="og:title" content="Iniciar sesión | Terrainnova" />
+        <meta property="og:description" content="Accede a tu cuenta de Terrainnova para comprar productos ecológicos y sostenibles. ¡Únete a nuestra comunidad!" />
+        <meta property="og:image" content="/logo.webp" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://terrainnova.com/login" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Iniciar sesión | Terrainnova" />
+        <meta name="twitter:description" content="Accede a tu cuenta de Terrainnova para comprar productos ecológicos y sostenibles. ¡Únete a nuestra comunidad!" />
+        <meta name="twitter:image" content="/logo.webp" />
+      </Helmet>
+      <main>
+        <div className="login-bg">
+          <div className="login-container">
+            {/* Izquierda: Formulario */}
+            <section className="login-form-side" aria-label="Formulario de inicio de sesión">
+              <div className="mb-4 text-center">
+                <img src={logo} alt="Logo de Terrainnova" className="login-logo" loading="lazy" />
+              </div>
+              <h1 className="login-title">
+                ¡Bienvenido de nuevo!
+              </h1>
+              <p className="login-desc">Por favor ingresa tus datos para continuar.</p>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <input
+                    type="email"
+                    className="form-control form-control-lg"
+                    placeholder="Correo electrónico"
+                    required
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="mb-4">
+                  <input
+                    type="password"
+                    className="form-control form-control-lg"
+                    placeholder="Contraseña"
+                    required
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                  />
+                </div>
+                {(loginError || status === "error") && (
+                  <div className="login-error">{loginError || (error as Error)?.message}</div>
+                )}
+                <button
+                  type="submit"
+                  className="btn btn-principal w-100 mb-3"
+                  style={{ borderRadius: 24, fontSize: 18, fontWeight: 600, padding: "12px 0" }}
+                  disabled={status === "pending"}
+                >
+                  {status === "pending" ? 'Ingresando...' : 'Ingresar'}
+                </button>
+              </form>
+              <div className="login-register-link">
+                ¿No tienes cuenta? <Link to="/registro" className="text-principal">Regístrate</Link>
+              </div>
+            </section>
+            {/* Derecha: Imagen */}
+            <aside className="login-img-side" aria-label="Imagen de bienvenida">
+              <img src={wonder1} alt="Ilustración de bienvenida a Terrainnova" />
+            </aside>
           </div>
         </div>
-        {/* Derecha: Imagen */}
-        <div className="login-img-side">
-          <img src={wonder1} alt="Ilustración de bienvenida a Terrainnova" />
-        </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 };
 

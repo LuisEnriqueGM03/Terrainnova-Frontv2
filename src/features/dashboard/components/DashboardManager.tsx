@@ -7,7 +7,7 @@ const DashboardManager: React.FC = () => {
   const { data, isLoading, error } = useDashboardStats();
 
   return (
-    <div>
+    <section>
       <h1 className="mb-4">Panel de Resumen</h1>
       {isLoading ? (
         <div>Cargando estadísticas...</div>
@@ -115,7 +115,7 @@ const DashboardManager: React.FC = () => {
           </div>
         </>
       ) : null}
-    </div>
+    </section>
   );
 };
 

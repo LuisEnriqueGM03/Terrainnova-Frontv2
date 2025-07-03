@@ -75,102 +75,110 @@ const ModalEditarProducto: React.FC<ModalEditarProductoProps> = ({ open, product
       <div className="modal-dialog modal-lg modal-dialog-centered">
         <div className="modal-content">
           <form onSubmit={handleGuardar}>
-            <div className="modal-header">
-              <h5 className="modal-title">Editar producto</h5>
-              <button type="button" className="btn-close" onClick={onClose} disabled={editarStatus === "pending" || subirImagenStatus === "pending"}></button>
-            </div>
-            <div className="modal-body">
-              {mensaje && <div className="alert alert-info">{mensaje}</div>}
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Nombre</label>
-                  <input
-                    className="form-control"
-                    name="nombre"
-                    value={formData.nombre || ''}
-                    onChange={handleInputChange}
-                    required
-                    disabled={editarStatus === "pending"}
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Categoría</label>
-                  <select
-                    className="form-select"
-                    name="categoriaId"
-                    value={formData.categoriaId || ''}
-                    onChange={handleInputChange}
-                    disabled={editarStatus === "pending"}
-                  >
-                    <option value="">Seleccionar categoría</option>
-                    {categorias.map(cat => (
-                      <option key={cat.id} value={cat.id}>{cat.nombre}</option>
-                    ))}
-                  </select>
-                </div>
+            <section aria-labelledby="modal-editar-producto-title">
+              <div className="modal-header">
+                <h2 className="modal-title" id="modal-editar-producto-title">Editar producto</h2>
+                <button type="button" className="btn-close" onClick={onClose} disabled={editarStatus === "pending" || subirImagenStatus === "pending"}></button>
               </div>
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Precio</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="precio"
-                    value={formData.precio || 0}
-                    onChange={handleInputChange}
-                    min="0"
-                    step="0.01"
-                    required
-                    disabled={editarStatus === "pending"}
-                  />
-                </div>
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Stock</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="stock"
-                    value={formData.stock || 0}
-                    onChange={handleInputChange}
-                    min="0"
-                    required
-                    disabled={editarStatus === "pending"}
-                  />
-                </div>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Descripción</label>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={descripcion}
-                  onChange={(editor) => {
-                    setDescripcion(editor.getData());
-                  }}
-                  disabled={editarStatus === "pending"}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Imagen del producto</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  disabled={editarStatus === "pending" || subirImagenStatus === "pending"}
-                />
-                <small className="form-text text-muted">
-                  Formatos permitidos: JPG, PNG. Máximo 2MB.
-                </small>
-                {selectedFile && (
-                  <div className="file-indicator">
-                    <small className="text-success">
-                      <i className="bi bi-check-circle me-1"></i>
-                      Archivo seleccionado: {selectedFile.name}
-                    </small>
+              <div className="modal-body">
+                {mensaje && <div className="alert alert-info">{mensaje}</div>}
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label" htmlFor="modal-editar-nombre">Nombre</label>
+                    <input
+                      id="modal-editar-nombre"
+                      className="form-control"
+                      name="nombre"
+                      value={formData.nombre || ''}
+                      onChange={handleInputChange}
+                      required
+                      disabled={editarStatus === "pending"}
+                    />
                   </div>
-                )}
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label" htmlFor="modal-editar-categoria">Categoría</label>
+                    <select
+                      id="modal-editar-categoria"
+                      className="form-select"
+                      name="categoriaId"
+                      value={formData.categoriaId || ''}
+                      onChange={handleInputChange}
+                      disabled={editarStatus === "pending"}
+                    >
+                      <option value="">Seleccionar categoría</option>
+                      {categorias.map(cat => (
+                        <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label" htmlFor="modal-editar-precio">Precio</label>
+                    <input
+                      id="modal-editar-precio"
+                      type="number"
+                      className="form-control"
+                      name="precio"
+                      value={formData.precio || 0}
+                      onChange={handleInputChange}
+                      min="0"
+                      step="0.01"
+                      required
+                      disabled={editarStatus === "pending"}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label" htmlFor="modal-editar-stock">Stock</label>
+                    <input
+                      id="modal-editar-stock"
+                      type="number"
+                      className="form-control"
+                      name="stock"
+                      value={formData.stock || 0}
+                      onChange={handleInputChange}
+                      min="0"
+                      required
+                      disabled={editarStatus === "pending"}
+                    />
+                  </div>
+                </div>
+                <div className="mb-3">
+                  <label className="form-label" htmlFor="modal-editar-descripcion">Descripción</label>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={descripcion}
+                    onChange={(editor) => {
+                      setDescripcion(editor.getData());
+                    }}
+                    disabled={editarStatus === "pending"}
+                    id="modal-editar-descripcion"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label" htmlFor="modal-editar-imagen">Imagen del producto</label>
+                  <input
+                    id="modal-editar-imagen"
+                    type="file"
+                    className="form-control"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    disabled={editarStatus === "pending" || subirImagenStatus === "pending"}
+                  />
+                  <small className="form-text text-muted">
+                    Formatos permitidos: JPG, PNG. Máximo 2MB.
+                  </small>
+                  {selectedFile && (
+                    <div className="file-indicator">
+                      <small className="text-success">
+                        <i className="bi bi-check-circle me-1"></i>
+                        Archivo seleccionado: {selectedFile.name}
+                      </small>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            </section>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={onClose} disabled={editarStatus === "pending" || subirImagenStatus === "pending"}>Cancelar</button>
               <button type="submit" className="btn btn-principal" disabled={editarStatus === "pending" || subirImagenStatus === "pending"}>

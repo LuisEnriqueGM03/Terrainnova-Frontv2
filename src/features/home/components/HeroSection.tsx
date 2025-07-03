@@ -31,7 +31,6 @@ const HeroSection: React.FC = () => {
             className="hero-logo"
           />
           <h2 className="hero-title">TERRAINNOVA</h2>
-          {/* Botón solo visible en responsive */}
           <button className="hero-btn-blanco hero-btn-responsive" onClick={() => window.location.href = '/catalogo'}>
             <i className="bi bi-box-seam" style={{ marginRight: '8px', fontSize: '1.2em', verticalAlign: 'middle' }}></i>
             Ver productos

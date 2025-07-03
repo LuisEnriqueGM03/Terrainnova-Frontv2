@@ -15,21 +15,14 @@ const AdminDashboardPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="d-flex" style={{ minHeight: '100vh', background: '#f5f6fa' }}>
+    <div className="admin-layout d-flex">
       <AdminSidebar />
       <div 
-        className="flex-grow-1 d-flex flex-column"
-        style={{ 
-          marginLeft: sidebarWidth,
-          minHeight: '100vh',
-          background: '#fff',
-          transition: 'margin-left 0.3s ease, background 0.3s',
-          boxShadow: 'none',
-          padding: 0
-        }}
+        className="admin-main flex-grow-1 d-flex flex-column"
+        style={{ marginLeft: sidebarWidth }}
       >
         <AdminHeader />
-        <main className="flex-grow-1 p-4">
+        <main className="admin-content flex-grow-1 p-4">
           <AdminContent />
         </main>
       </div>

@@ -122,131 +122,129 @@ const ProductoManager: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className="productos-header">
-        <h1 className="mb-0">Productos</h1>
-        <button 
-          className="btn btn-principal btn-toggle-form productos-header-btn"
-          onClick={() => setModalAgregar(true)}
-        >
-          <i className={`bi ${showForm ? 'bi-dash-lg' : 'bi-plus-lg'} me-2`}></i>
-          Agregar Producto
-        </button>
-      </div>
-      
-      <ModalAgregarProducto
-        open={modalAgregar}
-        categorias={categorias || []}
-        onClose={() => setModalAgregar(false)}
-      />
-
-      {mensaje && (
-        <div className={`alert ${mensaje.includes('Error') ? 'alert-danger' : 'alert-success'} mb-3`}>
-          {mensaje}
+    <section>
+      <div>
+        <div className="productos-header">
+          <h1 className="mb-0">Productos</h1>
+          <button 
+            className="btn btn-principal btn-toggle-form productos-header-btn"
+            onClick={() => setModalAgregar(true)}
+          >
+            <i className={`bi ${showForm ? 'bi-dash-lg' : 'bi-plus-lg'} me-2`}></i>
+            Agregar Producto
+          </button>
         </div>
-      )}
-
-      {/* Lista de productos */}
-      {isLoading ? (
-        <div className="text-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Cargando...</span>
+        <ModalAgregarProducto
+          open={modalAgregar}
+          categorias={categorias || []}
+          onClose={() => setModalAgregar(false)}
+        />
+        {mensaje && (
+          <div className={`alert ${mensaje.includes('Error') ? 'alert-danger' : 'alert-success'} mb-3`}>
+            {mensaje}
           </div>
-        </div>
-      ) : error ? (
-        <div className="alert alert-danger">Error al cargar productos</div>
-      ) : (
-        <div className="row producto-grid">
-          {productosFiltrados?.map(producto => (
-            <div key={producto.id} className="col-12 col-md-6 col-lg-4 mb-4">
-              <div className="producto-card h-100 d-flex flex-column">
-                <div className="producto-card-img-wrapper">
-                    <img
-                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}${producto.imagenUrl}`}
-                      alt={producto.nombre}
-                    className="producto-card-img"
-                    />
-                  </div>
-                <div className="producto-card-body flex-grow-1 d-flex flex-column justify-content-between">
-                  <div>
-                    <div className="producto-card-nombre">{producto.nombre}</div>
-                    <div className="producto-card-categoria">
-                    {producto.categoria ? (
-                        <span className="badge producto-card-categoria-badge">
-                        {producto.categoria.nombre}
-                      </span>
-                    ) : (
-                        <span className="text-muted">Sin categoría</span>
-                    )}
-                    </div>
-                  </div>
-                  <div className="d-flex justify-content-between align-items-center mt-2">
-                    <span className="producto-card-precio">
-                      {formatPrice(producto.precio)}
-                    </span>
-                    <span className={`producto-card-stock badge ${producto.stock === 0 ? 'producto-card-stock-zero' : ''}`}>
-                      Stock: {producto.stock}
-                    </span>
-                  </div>
-                </div>
-                <div className="producto-card-footer mt-2">
-                  <div className="producto-card-actions d-flex justify-content-center gap-2">
-                    <button
-                      className="btn btn-action btn-eliminar"
-                      title="Eliminar"
-                      onClick={() => setModalBorrar({ open: true, id: producto.id, nombre: producto.nombre })}
-                      disabled={eliminarStatus === "pending"}
-                    >
-                      <i className="bi bi-trash"></i>
-                    </button>
-                    <button
-                      className="btn btn-action btn-editar"
-                      title="Editar"
-                      onClick={() => setModalEditar({ open: true, producto })}
-                      disabled={eliminarStatus === "pending"}
-                    >
-                      <i className="bi bi-pencil"></i>
-                    </button>
-                    <button
-                      className="btn btn-action btn-ver"
-                      title="Ver descripción"
-                      onClick={() => setModalVerDescripcion({ open: true, descripcion: producto.descripcion, nombre: producto.nombre })}
-                    >
-                      <i className="bi bi-eye"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
+        )}
+        {/* Lista de productos */}
+        {isLoading ? (
+          <div className="text-center">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Cargando...</span>
             </div>
-          ))}
-        </div>
-      )}
-
-      <ModalConfirmar
-        open={modalBorrar.open}
-        onClose={() => setModalBorrar({ open: false, id: null, nombre: "" })}
-        onConfirm={handleConfirmBorrar}
-        mensaje={`¿Seguro que deseas eliminar el producto "${modalBorrar.nombre}"?`}
-        titulo="Confirmar eliminación"
-        confirmText={eliminarStatus === "pending" ? "Eliminando..." : "Eliminar"}
-        cancelText="Cancelar"
-        loading={eliminarStatus === "pending"}
-      />
-
-      <ModalEditarProducto
-        open={modalEditar.open}
-        producto={modalEditar.producto}
-        categorias={categorias || []}
-        onClose={() => setModalEditar({ open: false, producto: null })}
-      />
-
-      <ModalVerDescripcionProducto
-        open={modalVerDescripcion.open}
-        descripcion={modalVerDescripcion.descripcion}
-        nombre={modalVerDescripcion.nombre}
-        onClose={() => setModalVerDescripcion({ open: false, descripcion: '', nombre: '' })}
-      />
-    </div>
+          </div>
+        ) : error ? (
+          <div className="alert alert-danger">Error al cargar productos</div>
+        ) : (
+          <section>
+            <div className="row producto-grid">
+              {productosFiltrados?.map(producto => (
+                <div key={producto.id} className="col-12 col-md-6 col-lg-4 mb-4">
+                  <article className="producto-card h-100 d-flex flex-column">
+                    <div className="producto-card-img-wrapper">
+                        <img
+                          src={`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}${producto.imagenUrl}`}
+                          alt={producto.nombre}
+                        className="producto-card-img"
+                        />
+                      </div>
+                    <div className="producto-card-body flex-grow-1 d-flex flex-column justify-content-between">
+                      <div>
+                        <div className="producto-card-nombre">{producto.nombre}</div>
+                        <div className="producto-card-categoria">
+                        {producto.categoria ? (
+                            <span className="badge producto-card-categoria-badge">
+                            {producto.categoria.nombre}
+                          </span>
+                        ) : (
+                            <span className="text-muted">Sin categoría</span>
+                        )}
+                        </div>
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center mt-2">
+                        <span className="producto-card-precio">
+                          {formatPrice(producto.precio)}
+                        </span>
+                        <span className={`producto-card-stock badge ${producto.stock === 0 ? 'producto-card-stock-zero' : ''}`}>
+                          Stock: {producto.stock}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="producto-card-footer mt-2">
+                      <div className="producto-card-actions d-flex justify-content-center gap-2">
+                        <button
+                          className="btn btn-action btn-eliminar"
+                          title="Eliminar"
+                          onClick={() => setModalBorrar({ open: true, id: producto.id, nombre: producto.nombre })}
+                          disabled={eliminarStatus === "pending"}
+                        >
+                          <i className="bi bi-trash"></i>
+                        </button>
+                        <button
+                          className="btn btn-action btn-editar"
+                          title="Editar"
+                          onClick={() => setModalEditar({ open: true, producto })}
+                          disabled={eliminarStatus === "pending"}
+                        >
+                          <i className="bi bi-pencil"></i>
+                        </button>
+                        <button
+                          className="btn btn-action btn-ver"
+                          title="Ver descripción"
+                          onClick={() => setModalVerDescripcion({ open: true, descripcion: producto.descripcion, nombre: producto.nombre })}
+                        >
+                          <i className="bi bi-eye"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+        <ModalConfirmar
+          open={modalBorrar.open}
+          onClose={() => setModalBorrar({ open: false, id: null, nombre: "" })}
+          onConfirm={handleConfirmBorrar}
+          mensaje={`¿Seguro que deseas eliminar el producto "${modalBorrar.nombre}"?`}
+          titulo="Confirmar eliminación"
+          confirmText={eliminarStatus === "pending" ? "Eliminando..." : "Eliminar"}
+          cancelText="Cancelar"
+          loading={eliminarStatus === "pending"}
+        />
+        <ModalEditarProducto
+          open={modalEditar.open}
+          producto={modalEditar.producto}
+          categorias={categorias || []}
+          onClose={() => setModalEditar({ open: false, producto: null })}
+        />
+        <ModalVerDescripcionProducto
+          open={modalVerDescripcion.open}
+          descripcion={modalVerDescripcion.descripcion}
+          nombre={modalVerDescripcion.nombre}
+          onClose={() => setModalVerDescripcion({ open: false, descripcion: '', nombre: '' })}
+        />
+      </div>
+    </section>
   );
 };
 

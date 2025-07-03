@@ -75,44 +75,46 @@ const StripeCheckoutForm: React.FC<StripeCheckoutFormProps> = ({ onSuccess }) =>
   };
 
   return (
-    <form onSubmit={step === 'datos' ? handleUpdatePerfil : handleSubmit} style={{ maxWidth: 420, margin: '0 auto', background: '#fff', borderRadius: 18, boxShadow: '0 4px 24px #0001', padding: '2em 2.5em' }}>
-      <h5 className="mb-3" style={{ color: '#22c55e', fontWeight: 700 }}>Pago seguro con tarjeta</h5>
-      {step === 'datos' ? (
-        <>
-          <div className="mb-3">
-            <label className="form-label">Dirección de entrega</label>
-            <input type="text" className="form-control" value={direccion} onChange={e => setDireccion(e.target.value)} placeholder="Ej: Calle 123, Ciudad" required />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Teléfono de contacto</label>
-            <input type="tel" className="form-control" value={telefono} onChange={e => setTelefono(e.target.value)} placeholder="Ej: 71234567" required />
-          </div>
-          {formError && <div className="alert alert-danger mt-2">{formError}</div>}
-          <button
-            type="submit"
-            className="btn btn-principal w-100 mt-3"
-            style={{ fontSize: 18, borderRadius: 14, fontWeight: 700, padding: '0.8em 0' }}
-            disabled={loading}
-          >
-            {loading ? 'Guardando...' : 'Continuar'}
-          </button>
-        </>
-      ) : (
-        <>
-          <PaymentElement options={{ layout: 'tabs' }} />
-          {error && <div className="alert alert-danger mt-3">{error}</div>}
-          {success && <div className="alert alert-success mt-3">¡Pago realizado con éxito!</div>}
-          <button
-            type="submit"
-            className="btn btn-principal w-100 mt-4"
-            style={{ fontSize: 18, borderRadius: 14, fontWeight: 700, padding: '0.8em 0' }}
-            disabled={!stripe || loading}
-          >
-            {loading ? 'Procesando...' : 'Pagar ahora'}
-          </button>
-        </>
-      )}
-    </form>
+    <section>
+      <form onSubmit={step === 'datos' ? handleUpdatePerfil : handleSubmit} style={{ maxWidth: 420, margin: '0 auto', background: '#fff', borderRadius: 18, boxShadow: '0 4px 24px #0001', padding: '2em 2.5em' }}>
+        <h2 className="mb-3" style={{ color: '#22c55e', fontWeight: 700, fontSize: '1.3rem' }}>Pago seguro con tarjeta</h2>
+        {step === 'datos' ? (
+          <>
+            <div className="mb-3">
+              <label className="form-label">Dirección de entrega</label>
+              <input type="text" className="form-control" value={direccion} onChange={e => setDireccion(e.target.value)} placeholder="Ej: Calle 123, Ciudad" required />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Teléfono de contacto</label>
+              <input type="tel" className="form-control" value={telefono} onChange={e => setTelefono(e.target.value)} placeholder="Ej: 71234567" required />
+            </div>
+            {formError && <div className="alert alert-danger mt-2">{formError}</div>}
+            <button
+              type="submit"
+              className="btn btn-principal w-100 mt-3"
+              style={{ fontSize: 18, borderRadius: 14, fontWeight: 700, padding: '0.8em 0' }}
+              disabled={loading}
+            >
+              {loading ? 'Guardando...' : 'Continuar'}
+            </button>
+          </>
+        ) : (
+          <>
+            <PaymentElement options={{ layout: 'tabs' }} />
+            {error && <div className="alert alert-danger mt-3">{error}</div>}
+            {success && <div className="alert alert-success mt-3">¡Pago realizado con éxito!</div>}
+            <button
+              type="submit"
+              className="btn btn-principal w-100 mt-4"
+              style={{ fontSize: 18, borderRadius: 14, fontWeight: 700, padding: '0.8em 0' }}
+              disabled={!stripe || loading}
+            >
+              {loading ? 'Procesando...' : 'Pagar ahora'}
+            </button>
+          </>
+        )}
+      </form>
+    </section>
   );
 };
 

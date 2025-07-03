@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from 'react-helmet-async';
 import { useParams } from "react-router-dom";
 import { fetchProductos, fetchProducto } from "../services/services";
 import { slugify } from "../../../shared/utils/slugify";
@@ -166,46 +167,70 @@ const ProductoDetailPage: React.FC = () => {
 
   const isSinStock = producto.stock === 0;
 
+  const pageTitle = producto?.nombre ? `${producto.nombre} | Terrainnova` : 'Detalle de producto | Terrainnova';
+  const pageDescription = producto?.descripcion ? producto.descripcion.replace(/<[^>]+>/g, '').slice(0, 160) : 'Consulta los detalles, precio y disponibilidad de este producto ecológico en Terrainnova.';
+  const pageImage = producto?.imagenUrl ? `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}${producto.imagenUrl}` : '/logo.webp';
+  const pageUrl = producto?.nombre ? `https://terrainnova.com/producto/${slugify(producto.nombre)}` : 'https://terrainnova.com/producto';
+
   return (
-    <div className="container py-5">
-      <div className="row align-items-start g-5">
-        {/* Imagen */}
-        <div className="col-12 col-md-5 d-flex justify-content-center align-items-start">
-          <img
-            src={`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}${producto.imagenUrl}`}
-            alt={producto.nombre}
-            className="producto-detail-img"
-          />
-        </div>
-        {/* Detalles */}
-        <div className="col-12 col-md-7">
-          <h2 className="producto-detail-titulo">{producto.nombre}</h2>
-          <div className="producto-detail-categoria">{producto.categoria?.nombre}</div>
-          <div className="producto-detail-precio">Bs. {producto.precio?.toLocaleString('es-BO', { minimumFractionDigits: 2 })}</div>
-          <div className="producto-detail-descripcion">
-            <div className="editorjs-viewer" dangerouslySetInnerHTML={{ __html: producto.descripcion || '<em>Sin descripción</em>' }} />
-          </div>
-          {isSinStock ? (
-            <div style={{ background: '#e53935', color: '#fff', fontWeight: 700, fontSize: 18, borderRadius: 12, padding: '14px 0', marginTop: 18, marginBottom: 0, textAlign: 'center', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-              <i className="bi bi-exclamation-circle-fill" style={{ fontSize: 26, color: '#fff' }}></i>
-              Sin stock
-            </div>
-          ) : (
-            <>
-              <div className="producto-detail-cantidad">
-                <span className="fw-semibold" style={{ fontSize: 17 }}>Cantidad</span>
-                <button className="producto-detail-cantidad-btn" onClick={() => handleCantidad(-1)} disabled={cantidad <= 1}>-</button>
-                <input type="number" className="producto-detail-cantidad-input" value={cantidad} min={1} max={producto.stock} readOnly />
-                <button className="producto-detail-cantidad-btn" onClick={() => handleCantidad(1)}>+</button>
+    <>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={pageImage} />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content={pageUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={pageImage} />
+      </Helmet>
+      <main>
+        <div className="container py-5">
+          <div className="row align-items-start g-5">
+            {/* Imagen */}
+            <figure className="col-12 col-md-5 d-flex justify-content-center align-items-start" style={{ margin: 0 }}>
+              <img
+                src={`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}${producto.imagenUrl}`}
+                alt={producto.nombre}
+                className="producto-detail-img"
+              />
+            </figure>
+            {/* Detalles */}
+            <section className="col-12 col-md-7">
+              <h1 className="producto-detail-titulo">{producto.nombre}</h1>
+              <div className="producto-detail-categoria">{producto.categoria?.nombre}</div>
+              <div className="producto-detail-precio">Bs. {producto.precio?.toLocaleString('es-BO', { minimumFractionDigits: 2 })}</div>
+              <div className="producto-detail-descripcion">
+                <article>
+                  <div className="editorjs-viewer" dangerouslySetInnerHTML={{ __html: producto.descripcion || '<em>Sin descripción</em>' }} />
+                </article>
               </div>
-              <button className="producto-detail-addcart" onClick={handleAddToCart}>
-                Añadir al carrito
-              </button>
-            </>
-          )}
+              {isSinStock ? (
+                <div style={{ background: '#e53935', color: '#fff', fontWeight: 700, fontSize: 18, borderRadius: 12, padding: '14px 0', marginTop: 18, marginBottom: 0, textAlign: 'center', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+                  <i className="bi bi-exclamation-circle-fill" style={{ fontSize: 26, color: '#fff' }}></i>
+                  Sin stock
+                </div>
+              ) : (
+                <>
+                  <div className="producto-detail-cantidad">
+                    <span className="fw-semibold" style={{ fontSize: 17 }}>Cantidad</span>
+                    <button className="producto-detail-cantidad-btn" onClick={() => handleCantidad(-1)} disabled={cantidad <= 1}>-</button>
+                    <input type="number" className="producto-detail-cantidad-input" value={cantidad} min={1} max={producto.stock} readOnly />
+                    <button className="producto-detail-cantidad-btn" onClick={() => handleCantidad(1)}>+</button>
+                  </div>
+                  <button className="producto-detail-addcart" onClick={handleAddToCart}>
+                    Añadir al carrito
+                  </button>
+                </>
+              )}
+            </section>
+          </div>
         </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 };
 

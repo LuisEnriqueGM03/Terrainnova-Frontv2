@@ -11,7 +11,7 @@ const PedidoManager: React.FC = () => {
   );
 
   return (
-    <div>
+    <section>
       <h1 className="mb-4">Pedidos</h1>
       {/* Aquí podrías agregar un formulario o botón para crear pedidos si lo necesitas */}
       {isLoading ? (
@@ -21,7 +21,7 @@ const PedidoManager: React.FC = () => {
       ) : (
         <AdminPedidosList pedidos={pedidosFiltrados || []} onRefresh={refetch} />
       )}
-    </div>
+    </section>
   );
 };
 

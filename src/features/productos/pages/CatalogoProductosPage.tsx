@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from 'react-helmet-async';
 import CatalogoSidebar from "../components/CatalogoSidebar";
 import { useProductos } from "../hooks/hooks";
 import { fetchProductosFiltrados } from "../services/services";
@@ -129,119 +130,136 @@ const CatalogoProductosPage: React.FC = () => {
 
   return (
     <>
-      <h1 className="catalogo-title" style={{ fontWeight: 900, fontSize: '2.2rem', margin: '1.5rem 0 1.2rem 0', textAlign: 'center', color: 'var(--color-principal, #19410e)' }}>Catálogo de productos</h1>
-      <div className="container py-4 d-flex flex-column align-items-center" style={{ minHeight: '100vh', background: '#fff' }}>
-        {/* Botón para mostrar/ocultar sidebar en móvil */}
-        <div className="d-md-none mb-3 catalogo-btn-filtros-wrapper">
-          <button
-            className="btn btn-principal catalogo-btn-filtros"
-            style={{ borderRadius: 16, fontWeight: 600, background: 'var(--color-principal)', color: '#fff', fontSize: 17, padding: '0.9em 0' }}
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            {sidebarOpen ? 'Ocultar filtros' : 'Mostrar filtros'}
-          </button>
-        </div>
-        <div className="row gx-4 justify-content-center" style={{ width: '100%' }}>
-          {/* Sidebar */}
-          <div
-            className={`col-12 col-md-4 col-lg-3 mb-4 mb-md-0 sidebar-slide ${sidebarOpen ? 'sidebar-slide-open' : ''}`}
-            style={{
-              transition: 'max-height 2s cubic-bezier(.4,2,.6,1), opacity 0.6s',
-              maxHeight: sidebarOpen || window.innerWidth >= 768 ? 1000 : 0,
-              overflow: 'hidden',
-            }}
-          >
-            <CatalogoSidebar
-              onFiltrar={handleFiltrar}
-              onLimpiar={handleLimpiar}
-            />
+      <Helmet>
+        <title>Catálogo de productos | Terrainnova</title>
+        <meta name="description" content="Explora nuestro catálogo de productos ecológicos y sostenibles. Filtra por categoría, precio y encuentra lo mejor para ti en Terrainnova." />
+        <meta property="og:title" content="Catálogo de productos | Terrainnova" />
+        <meta property="og:description" content="Explora nuestro catálogo de productos ecológicos y sostenibles. Filtra por categoría, precio y encuentra lo mejor para ti en Terrainnova." />
+        <meta property="og:image" content="/logo.webp" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://terrainnova.com/catalogo" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Catálogo de productos | Terrainnova" />
+        <meta name="twitter:description" content="Explora nuestro catálogo de productos ecológicos y sostenibles. Filtra por categoría, precio y encuentra lo mejor para ti en Terrainnova." />
+        <meta name="twitter:image" content="/logo.webp" />
+      </Helmet>
+      <main>
+        <h1 className="catalogo-title" style={{ fontWeight: 900, fontSize: '2.2rem', margin: '1.5rem 0 1.2rem 0', textAlign: 'center', color: 'var(--color-principal, #19410e)' }}>Catálogo de productos</h1>
+        <div className="container py-4 d-flex flex-column align-items-center" style={{ minHeight: '100vh', background: '#fff' }}>
+          {/* Botón para mostrar/ocultar sidebar en móvil */}
+          <div className="d-md-none mb-3 catalogo-btn-filtros-wrapper">
+            <button
+              className="btn btn-principal catalogo-btn-filtros"
+              style={{ borderRadius: 16, fontWeight: 600, background: 'var(--color-principal)', color: '#fff', fontSize: 17, padding: '0.9em 0' }}
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
+              {sidebarOpen ? 'Ocultar filtros' : 'Mostrar filtros'}
+            </button>
           </div>
-          {/* Grid de productos */}
-          <div className="col-12 col-md-8 col-lg-9">
-            {/* Mostrar cantidad de productos filtrados */}
-            <div className="mb-3 fw-semibold" style={{ fontSize: 18 }}>
-              {filtrando ? 'Filtrando...' : `${cantidadMostrar} Producto${cantidadMostrar === 1 ? '' : 's'}`}
-            </div>
-            {isLoading ? (
-              <div className="text-center py-5">Cargando productos...</div>
-            ) : error ? (
-              <div className="alert alert-danger">Error al cargar productos</div>
-            ) : (
-              <div className="row">
-                {productosMostrar?.map(producto => (
-                  <div key={producto.id} className="col-12 col-sm-6 col-lg-4 mb-4">
-                    <div
-                      className="card h-100 border-0 p-0 overflow-hidden position-relative catalogo-card"
-                      style={{ borderRadius: 22, cursor: 'pointer', boxShadow: '0 8px 32px rgba(44, 62, 80, 0.13)', transition: 'box-shadow 0.28s cubic-bezier(.4,2,.6,1), border 0.2s' }}
-                      onClick={() => setOpenId(producto.id === openId ? null : producto.id)}
-                    >
-                      {producto.imagenUrl && (
-                        <img
-                          src={`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}${producto.imagenUrl}`}
-                          alt={producto.nombre}
-                          style={{
-                            width: '100%',
-                            maxWidth: '100%',
-                            height: 220,
-                            objectFit: 'cover',
-                            borderTopLeftRadius: 18,
-                            borderTopRightRadius: 18,
-                            background: '#fff',
-                            display: 'block',
-                          }}
-                        />
-                      )}
-                      <div className="card-body d-flex flex-column align-items-start justify-content-center p-4" style={{ textAlign: 'left', minHeight: 160 }}>
-                        <div className="fw-bold mb-1" style={{ fontSize: 17, color: '#222', textAlign: 'left' }}>{producto.nombre}</div>
-                        <div className="mb-1" style={{ color: '#888', fontSize: 15, fontWeight: 500, textAlign: 'left' }}>{producto.categoria?.nombre || 'Sin categoría'}</div>
-                        <div className="fw-bold mb-0" style={{ fontSize: 19, color: '#222', textAlign: 'left', width: '100%' }}>
-                          Bs. {producto.precio?.toLocaleString('es-BO', { minimumFractionDigits: 2 })}
-                        </div>
-                        {/* Área de compra desplegable */}
-                        <div
-                          style={{
-                            maxHeight: openId === producto.id ? (producto.stock === 0 ? 120 : 80) : 0,
-                            opacity: openId === producto.id ? 1 : 0,
-                            overflow: 'hidden',
-                            transition: 'max-height 0.35s cubic-bezier(.4,2,.6,1), opacity 0.2s',
-                            width: '100%',
-                            marginTop: openId === producto.id ? (producto.stock === 0 ? 24 : 16) : 0
-                          }}
-                        >
-                          <div className="w-100 d-flex align-items-center justify-content-start gap-2 mt-2">
-                            <button
-                              className={`btn catalogo-btn-ver ${producto.stock === 0 ? 'w-100' : 'w-75'}`}
-                              style={{ borderRadius: 16, fontWeight: 600, fontSize: 16, background: 'var(--color-principal)', color: '#fff', border: 'none', transition: 'background 0.18s, box-shadow 0.18s' }}
-                              onClick={e => { e.stopPropagation(); navigate(`/producto/${slugify(producto.nombre)}`); }}
-                            >
-                              Ver producto
-                            </button>
-                            {producto.stock === 0 ? null : (
-                              <button
-                                className="btn d-flex align-items-center justify-content-center catalogo-btn-carrito"
-                                style={{ borderRadius: 16, width: 44, height: 44, fontSize: 22, border: '2px solid var(--color-principal)', color: 'var(--color-principal)', background: '#fff', transition: 'border 0.18s, color 0.18s, box-shadow 0.18s' }}
-                                onClick={e => handleAddToCart(e, producto)}
-                                title="Agregar al carrito"
-                              >
-                                <i className="bi bi-cart-plus" style={{ color: 'var(--color-principal)' }}></i>
-                              </button>
-                            )}
-                          </div>
-                          {producto.stock === 0 && (
-                            <div style={{ background: '#e53935', color: '#fff', fontWeight: 700, fontSize: 15, borderRadius: 10, padding: '10px 0', marginTop: 8, marginBottom: 0, textAlign: 'center', width: '100%' }}>
-                              Sin stock
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+          <div className="row gx-4 justify-content-center" style={{ width: '100%' }}>
+            {/* Sidebar */}
+            <aside
+              className={`col-12 col-md-4 col-lg-3 mb-4 mb-md-0 sidebar-slide ${sidebarOpen ? 'sidebar-slide-open' : ''}`}
+              style={{
+                transition: 'max-height 2s cubic-bezier(.4,2,.6,1), opacity 0.6s',
+                maxHeight: sidebarOpen || window.innerWidth >= 768 ? 1000 : 0,
+                overflow: 'hidden',
+              }}
+            >
+              <CatalogoSidebar
+                onFiltrar={handleFiltrar}
+                onLimpiar={handleLimpiar}
+              />
+            </aside>
+            {/* Grid de productos */}
+            <section className="col-12 col-md-8 col-lg-9" aria-label="Listado de productos">
+              {/* Mostrar cantidad de productos filtrados */}
+              <div className="mb-3 fw-semibold" style={{ fontSize: 18 }}>
+                {filtrando ? 'Filtrando...' : `${cantidadMostrar} Producto${cantidadMostrar === 1 ? '' : 's'}`}
               </div>
-            )}
+              {isLoading ? (
+                <div className="text-center py-5">Cargando productos...</div>
+              ) : error ? (
+                <div className="alert alert-danger">Error al cargar productos</div>
+              ) : (
+                <div className="row">
+                  {productosMostrar?.map(producto => (
+                    <div key={producto.id} className="col-12 col-sm-6 col-lg-4 mb-4">
+                      <article>
+                        <div
+                          className="card h-100 border-0 p-0 overflow-hidden position-relative catalogo-card"
+                          style={{ borderRadius: 22, cursor: 'pointer', boxShadow: '0 8px 32px rgba(44, 62, 80, 0.13)', transition: 'box-shadow 0.28s cubic-bezier(.4,2,.6,1), border 0.2s' }}
+                          onClick={() => setOpenId(producto.id === openId ? null : producto.id)}
+                        >
+                          {producto.imagenUrl && (
+                            <img
+                              src={`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}${producto.imagenUrl}`}
+                              alt={producto.nombre}
+                              style={{
+                                width: '100%',
+                                maxWidth: '100%',
+                                height: 220,
+                                objectFit: 'cover',
+                                borderTopLeftRadius: 18,
+                                borderTopRightRadius: 18,
+                                background: '#fff',
+                                display: 'block',
+                              }}
+                            />
+                          )}
+                          <div className="card-body d-flex flex-column align-items-start justify-content-center p-4" style={{ textAlign: 'left', minHeight: 160 }}>
+                            <div className="fw-bold mb-1" style={{ fontSize: 17, color: '#222', textAlign: 'left' }}>{producto.nombre}</div>
+                            <div className="mb-1" style={{ color: '#888', fontSize: 15, fontWeight: 500, textAlign: 'left' }}>{producto.categoria?.nombre || 'Sin categoría'}</div>
+                            <div className="fw-bold mb-0" style={{ fontSize: 19, color: '#222', textAlign: 'left', width: '100%' }}>
+                              Bs. {producto.precio?.toLocaleString('es-BO', { minimumFractionDigits: 2 })}
+                            </div>
+                            {/* Área de compra desplegable */}
+                            <div
+                              style={{
+                                maxHeight: openId === producto.id ? (producto.stock === 0 ? 120 : 80) : 0,
+                                opacity: openId === producto.id ? 1 : 0,
+                                overflow: 'hidden',
+                                transition: 'max-height 0.35s cubic-bezier(.4,2,.6,1), opacity 0.2s',
+                                width: '100%',
+                                marginTop: openId === producto.id ? (producto.stock === 0 ? 24 : 16) : 0
+                              }}
+                            >
+                              <div className="w-100 d-flex align-items-center justify-content-start gap-2 mt-2">
+                                <button
+                                  className={`btn catalogo-btn-ver ${producto.stock === 0 ? 'w-100' : 'w-75'}`}
+                                  style={{ borderRadius: 16, fontWeight: 600, fontSize: 16, background: 'var(--color-principal)', color: '#fff', border: 'none', transition: 'background 0.18s, box-shadow 0.18s' }}
+                                  onClick={e => { e.stopPropagation(); navigate(`/producto/${slugify(producto.nombre)}`); }}
+                                >
+                                  Ver producto
+                                </button>
+                                {producto.stock === 0 ? null : (
+                                  <button
+                                    className="btn d-flex align-items-center justify-content-center catalogo-btn-carrito"
+                                    style={{ borderRadius: 16, width: 44, height: 44, fontSize: 22, border: '2px solid var(--color-principal)', color: 'var(--color-principal)', background: '#fff', transition: 'border 0.18s, color 0.18s, box-shadow 0.18s' }}
+                                    onClick={e => handleAddToCart(e, producto)}
+                                    title="Agregar al carrito"
+                                  >
+                                    <i className="bi bi-cart-plus" style={{ color: 'var(--color-principal)' }}></i>
+                                  </button>
+                                )}
+                              </div>
+                              {producto.stock === 0 && (
+                                <div style={{ background: '#e53935', color: '#fff', fontWeight: 700, fontSize: 15, borderRadius: 10, padding: '10px 0', marginTop: 8, marginBottom: 0, textAlign: 'center', width: '100%' }}>
+                                  Sin stock
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </>
   );
