@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useProductos, useCrearProducto, useEliminarProducto, useSubirImagenProducto } from "../hooks/hooks";
 import { useCategorias } from "../../categorias/hooks/hooks";
 import ModalConfirmar from "../../categorias/components/ModalConfirmar";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import type { CreateProductoData } from "../types/types";
 import ModalEditarProducto from "./ModalEditarProducto";
 import ModalAgregarProducto from "./ModalAgregarProducto";
