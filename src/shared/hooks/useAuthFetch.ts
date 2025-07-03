@@ -5,7 +5,7 @@ export function useAuthFetch() {
 
   return async (url: string, options: RequestInit = {}) => {
     const headers = {
-      ...(options.headers || {}),
+      ...(options.headers || {} as HeadersInit),
       Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
     };
     const res = await fetch(url, { ...options, headers });

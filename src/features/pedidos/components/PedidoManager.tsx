@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { usePedidosAdmin } from '../hooks/hooks';
 import AdminPedidosList from './AdminPedidosList';
 import { useSearch } from '../../../shared/context/SearchContext';

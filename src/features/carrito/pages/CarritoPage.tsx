@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useCarritoContext, useCarritoCantidad, useCarritoStats } from "../hooks/hooks";
 import { useAuth } from "../../auth/context";
 import { Link, useNavigate } from "react-router-dom";
-import { checkoutStripe } from "../services/services";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -20,7 +19,6 @@ const CarritoPage: React.FC = () => {
   const { total, isEmpty } = useCarritoStats();
   const { usuario } = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [showStripe, setShowStripe] = useState(false);
   const { clientSecret, loading: stripeLoading, error: stripeError, createPayment } = useStripePayment();
 
@@ -201,7 +199,7 @@ const CarritoPage: React.FC = () => {
                     <button
                       className="btn btn-principal w-100 py-3"
                       style={{ fontSize: 18, borderRadius: 16, fontWeight: 600 }}
-                      disabled={isEmpty || !!loading}
+                      disabled={isEmpty || !!stripeLoading}
                       onClick={handleShowStripe}
                     >
                       {stripeLoading ? (
